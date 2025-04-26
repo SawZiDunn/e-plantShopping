@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// redux, reducer functions, slice
+
 export const CartSlice = createSlice({
     name: "cart",
     initialState: {

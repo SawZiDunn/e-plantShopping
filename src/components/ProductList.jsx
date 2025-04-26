@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ProductList.css";
-import { addItem } from "./CartSlice";
+import { addItem } from "../redux/CartSlice";
 import CartItem from "./CartItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 function ProductList() {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
 
     const dispatch = useDispatch();
+    // getting cartItems from redux store
+    const cartItems = useSelector((state) => state.cart.items);
+
+    const totalQuantity = cartItems.reduce(
+        (total, item) => item.quantity + total,
+        0
+    );
 
     const plantsArray = [
         {
@@ -233,6 +241,7 @@ function ProductList() {
             ],
         },
     ];
+
     const styleObj = {
         backgroundColor: "#4CAF50",
         color: "#fff!important",
@@ -242,17 +251,20 @@ function ProductList() {
         alignIems: "center",
         fontSize: "20px",
     };
+
     const styleObjUl = {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         width: "1100px",
     };
+
     const styleA = {
         color: "white",
         fontSize: "30px",
         textDecoration: "none",
     };
+
     const handleCartClick = (e) => {
         e.preventDefault();
         setShowCart(true); // Set showCart to true when cart icon is clicked
@@ -270,7 +282,7 @@ function ProductList() {
     };
 
     const handleAddToCart = (product) => {
-        dispatch(addItem(product));
+        dispatch(addItem(product)); // redux
         setAddedToCart((prevState) => ({
             ...prevState,
             [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
@@ -341,6 +353,11 @@ function ProductList() {
                                         id="mainIconPathAttribute"
                                     ></path>
                                 </svg>
+                                {totalQuantity > 0 && (
+                                    <span className="cart-count">
+                                        {totalQuantity}
+                                    </span>
+                                )}
                             </h1>
                         </a>
                     </div>
