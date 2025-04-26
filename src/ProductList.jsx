@@ -370,8 +370,8 @@ function ProductList() {
                                         <div className="product-description">
                                             {plant.description}
                                         </div>
-                                        <div className="product-description">
-                                            {plant.description}
+                                        <div className="product-price">
+                                            Cost: {plant.cost}
                                         </div>
                                         <button
                                             className="product-button"
